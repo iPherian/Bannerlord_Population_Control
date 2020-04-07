@@ -16,6 +16,7 @@ namespace PopulationControl
     private const string MANAGE_POPULATION_MENU_TITLE = "{=!}Manage Population";
     private const float MIN_PROSPERITY = 1.1f;
     private const float MIN_LOYALTY = 0.0f;
+    private const float LOYALTY_RATIO = 1.0f;
     private const int MENU_TOWN_INSERT_INDEX = 5;
     private const int MENU_CASTLE_INSERT_INDEX = 3;
     private const string MODULE_ID = PopulationControlSubModule.MODULE_ID;
@@ -78,9 +79,16 @@ namespace PopulationControl
           new GameMenuOption.OnConditionDelegate(
               game_menu_manage_population_on_condition),
           x => GameMenu.SwitchToMenu(menuId), false, insertIntoParentAt);
+      const float prosperityRatioDisplay = 0.1f;
+      const float loyaltyRatioDisplay = prosperityRatioDisplay * LOYALTY_RATIO;
       campaignGameSystemStarter.AddGameMenu(
           menuId,
-          "{=!}Manage Population.\n\nPopulation is considered to be equivalent to prosperity and reducing it reduces loyalty proportionally. E.g. if you remove 500 people and this is 10% the city, 10% of loyalty will also be reduced.",
+          "{=!}Manage Population.\nPopulation is considered to be equivalent to " +
+              "prosperity and reducing it reduces loyalty proportionally. E.g. if " +
+              "you remove 500 people and this is " +
+              (prosperityRatioDisplay * 100.0f).ToString() + "% of them, " +
+              (loyaltyRatioDisplay * 100.0f).ToString() +
+              "% of loyalty will also be reduced.",
           new OnInitDelegate(game_menu_manage_population_on_init),
           GameOverlays.MenuOverlayType.SettlementWithCharacters);
       campaignGameSystemStarter.AddGameMenuOption(
@@ -250,7 +258,7 @@ namespace PopulationControl
       {
         // no loyalty change on increase in population
         float loyaltyDeltaRatio =
-            Math.Min(0.0f, realProsperityDelta / oldProsperity);
+            Math.Min(0.0f, realProsperityDelta / oldProsperity * LOYALTY_RATIO);
         float oldLoyalty = Settlement.CurrentSettlement.Town.Loyalty;
         Settlement.CurrentSettlement.Town.Loyalty =
             Math.Max(MIN_LOYALTY, oldLoyalty + oldLoyalty * loyaltyDeltaRatio);
