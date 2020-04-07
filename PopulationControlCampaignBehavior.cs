@@ -35,16 +35,24 @@ namespace PopulationControl
 
     private void AddGameMenus(CampaignGameStarter campaignGameSystemStarter)
     {
-      AddManagePopulationToMenu(
-          new List<Tuple<string, int>>{
-              new Tuple<string, int>("town", MENU_TOWN_INSERT_INDEX),
-              new Tuple<string, int>("castle", MENU_CASTLE_INSERT_INDEX)},
-          campaignGameSystemStarter);
-      AddProsperityCheatToMenu(
-          new List<Tuple<string, int>>{
-              new Tuple<string, int>("town", MENU_TOWN_INSERT_INDEX + 1),
-              new Tuple<string, int>("castle", MENU_CASTLE_INSERT_INDEX + 1)},
-          campaignGameSystemStarter);
+      try
+      {
+        AddManagePopulationToMenu(
+            new List<Tuple<string, int>>{
+                new Tuple<string, int>("town", MENU_TOWN_INSERT_INDEX),
+                new Tuple<string, int>("castle", MENU_CASTLE_INSERT_INDEX)},
+            campaignGameSystemStarter);
+        AddProsperityCheatToMenu(
+            new List<Tuple<string, int>>{
+                new Tuple<string, int>("town", MENU_TOWN_INSERT_INDEX + 1),
+                new Tuple<string, int>("castle", MENU_CASTLE_INSERT_INDEX + 1)},
+            campaignGameSystemStarter);
+      }
+      catch (KeyNotFoundException e)
+      {
+        DisplayInfoMsg(
+            "Population Control mod: Couldn't add menus. This is harmless, but you'll need to reload your save before the population management menus appear.");
+      }
     }
 
     private void
