@@ -1,7 +1,7 @@
 ﻿<Module>
   <Name value="Population Control" />
   <Id value="PopulationControl" />
-  <Version value="v1.0.1" />
+  <Version value="v1.0.2" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
   <DependedModules>
