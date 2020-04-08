@@ -49,7 +49,7 @@ namespace PopulationControl
                 new Tuple<string, int>("castle", MENU_CASTLE_INSERT_INDEX + 1)},
             campaignGameSystemStarter);
       }
-      catch (KeyNotFoundException e)
+      catch (KeyNotFoundException)
       {
         DisplayInfoMsg(
             "Population Control mod: Couldn't add menus. This is harmless, but you'll need to reload your save before the population management menus appear.");
