@@ -84,6 +84,21 @@ namespace PopulationControl
           new OnInitDelegate(game_menu_manage_population_on_init),
           GameOverlays.MenuOverlayType.SettlementWithCharacters);
       campaignGameSystemStarter.AddGameMenuOption(
+          menuId, menuId + "_decrease_10_percent",
+          "{=!}Kick 10% of people out (decreases loyalty)", x => true,
+          new GameMenuOption.OnConsequenceDelegate(
+              game_menu_manage_population_decrease_pop_10_percent_on_consequence));
+      campaignGameSystemStarter.AddGameMenuOption(
+          menuId, menuId + "_decrease_30_percent",
+          "{=!}Kick 30% of people out (decreases loyalty)", x => true,
+          new GameMenuOption.OnConsequenceDelegate(
+              game_menu_manage_population_decrease_pop_30_percent_on_consequence));
+      campaignGameSystemStarter.AddGameMenuOption(
+          menuId, menuId + "_decrease_200",
+          "{=!}Kick 200 people out (decreases loyalty)", x => true,
+          new GameMenuOption.OnConsequenceDelegate(
+              game_menu_manage_population_decrease_pop_200_on_consequence));
+      campaignGameSystemStarter.AddGameMenuOption(
           menuId, menuId + "_decrease_500",
           "{=!}Kick 500 people out (decreases loyalty)", x => true,
           new GameMenuOption.OnConsequenceDelegate(
@@ -150,6 +165,27 @@ namespace PopulationControl
     }
 
     private static void
+    game_menu_manage_population_decrease_pop_10_percent_on_consequence(
+        MenuCallbackArgs args)
+    {
+      ChangeProsperityPercent(-0.1f);
+    }
+
+    private static void
+    game_menu_manage_population_decrease_pop_30_percent_on_consequence(
+        MenuCallbackArgs args)
+    {
+      ChangeProsperityPercent(-0.3f);
+    }
+
+    private static void
+    game_menu_manage_population_decrease_pop_200_on_consequence(
+        MenuCallbackArgs args)
+    {
+      ChangeProsperity(-200.0f);
+    }
+
+    private static void
     game_menu_manage_population_decrease_pop_500_on_consequence(
         MenuCallbackArgs args)
     {
@@ -186,6 +222,11 @@ namespace PopulationControl
     {
       args.optionLeaveType = GameMenuOption.LeaveType.Leave;
       return true;
+    }
+
+    private static void ChangeProsperityPercent(float deltaPercent)
+    {
+      ChangeProsperity(Settlement.CurrentSettlement.Prosperity * deltaPercent);
     }
 
     private static void ChangeProsperityRaw(float delta)
