@@ -251,8 +251,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>set "mod_dir=$(SolutionDir)Module"
-set "bin_dir=$(SolutionDir)Module\bin\Win64_Shipping_Client"
+    <PostBuildEvent>set "mod_dir=$(SolutionDir)$(ProjectName)"
+set "bin_dir=%25mod_dir%25\bin\Win64_Shipping_Client"
 set "module_dir=$(GameFolder)\Modules\$(ProjectName)"
 
 echo mod_dir = "%25mod_dir%25"
